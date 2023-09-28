@@ -18,30 +18,35 @@
     </div>
 </template>
 
-<script lang="ts" setup>
+<script  setup>
 import { reactive } from 'vue'
-import axios from 'axios'
+
+import { userUserStore } from '../pinia/modules/user'
+
+// const router = useRouter()
+
 const form = reactive({
     username: '',
     password: ''
 })
 
+const userStore = userUserStore()
+
 const submitForm = async () => {
-    console.log(form)
-    try {
-        const response = await axios.post('/front/login', form)
-        // 处理成功响应
-        
-        console.log(response.data)
-    } catch (error) {
-        // 处理错误
-        console.error(error,"error")
-    }
+    await userStore.login(form)
 }
 
 </script>
 
 <style scoped>
+.el-button[type="sub"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 .login-box {
     max-width: 400px;
     margin: 0 auto;
@@ -52,6 +57,14 @@ const submitForm = async () => {
 
 h2 {
     margin-top: 0;
+}
+
+.el-input {
+    width: 100%;
+    /* border: 1px solid #ccc; */
+    /* color: #007bff;
+     */
+
 }
 
 .register-link {
