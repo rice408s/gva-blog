@@ -26,17 +26,17 @@ export const userUserStore = defineStore(
 
             try {
                 const authStore = useAuthStore()
-                console.log(authStore)
 
                 this.username = userData.username
                 const result = await axios.post('/front/login', userData)
                 const { data, code } = result.data
                 if (code === 0) {
                     this.token = data.token
-                    console.log(this.username, this.token, code)
                     authStore.setIsAuthenticated(true)
-                    console.log(authStore.isAuthenticated)
-                    localStorage.setItem('isAuthenticated', true)
+                    
+                    
+                    localStorage.setItem('token', this.token)
+                    
                     router.push('/home')
                 }
                 else {
@@ -56,8 +56,36 @@ export const userUserStore = defineStore(
             authStore.setIsAuthenticated(false)
             console.log(authStore.isAuthenticated)
             router.push('/login')
+            localStorage.removeItem('token')
+        },
+    
+        async init(){
+            const token = localStorage.getItem('token')
+            if (token){
+                console.log(token)
+                try{
+                    const res=await  axios.post('/front/verify',null,{
+                        headers:{
+                            Authorization:`Bearer ${token}`
+                        }
+                    })
+                    const {code ,data}=res.data
+                    if (code==0){
+                        this.username=data.username
+                        this.token=token
+                        this.userId=data.userId
+                    }else{
+                        localStorage.removeItem('token')
+                    }
+                }catch(e){
+                    console.error(e)
+                }
+            }
         }
-    }
+    
+    },
+
+    
 })
 
 

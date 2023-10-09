@@ -1,6 +1,10 @@
+<script setup>
+import HelloWorld from "../components/HelloWorld.vue"
+</script>
+
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <HelloWorld class="hello" msg="这是一个博客" />
   </div>
 </template>
 
@@ -12,4 +16,15 @@
     align-items: center;
   }
 }
+
+.hello {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 3rem;
+    /* color: #42b983; */
+    font-weight: 300;
+    margin-bottom: 2rem;
+
+}
+
 </style>

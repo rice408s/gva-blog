@@ -1,75 +1,31 @@
 <template>
   <div>
     <div class="gva-form-box">
-      <el-form
-        ref="elFormRef"
-        :model="formData"
-        label-position="right"
-        :rules="rule"
-        label-width="80px"
-      >
-        <el-form-item label="标题:" prop="titile">
-          <el-input
-            v-model="formData.titile"
-            :clearable="true"
-            placeholder="请输入"
-          />
+      <el-form ref="elFormRef" :model="formData" label-position="right" :rules="rule" label-width="80px">
+        <el-form-item label="标题:" prop="title">
+          <el-input v-model="formData.title" :clearable="true" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="用户id:" prop="userId">
-          <el-input
-            v-model.number="formData.userId"
-            :clearable="true"
-            placeholder="请输入"
-          />
+          <el-input v-model.number="formData.userId" :clearable="true" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="内容:" prop="content">
-          <el-input
-            v-model="formData.content"
-            :clearable="true"
-            placeholder="请输入"
-          />
+          <el-input v-model="formData.content" :clearable="true" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="发布日期:" prop="date">
-          <el-date-picker
-            v-model="formData.date"
-            type="date"
-            placeholder="选择日期"
-            :clearable="true"
-          />
+          <el-date-picker v-model="formData.date" type="date" placeholder="选择日期" :clearable="true" />
         </el-form-item>
         <el-form-item label="点赞数:" prop="likes">
-          <el-input
-            v-model.number="formData.likes"
-            :clearable="true"
-            placeholder="请输入"
-          />
+          <el-input v-model.number="formData.likes" :clearable="true" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="标签:" prop="tags">
-          <el-input
-            v-model="formData.tags"
-            :clearable="true"
-            placeholder="请输入"
-          />
+          <el-input v-model="formData.tags" :clearable="true" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="分类:" prop="category">
-          <el-input
-            v-model="formData.category"
-            :clearable="true"
-            placeholder="请输入"
-          />
+          <el-input v-model="formData.category" :clearable="true" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="状态:" prop="status">
-          <el-select
-            v-model="formData.status"
-            placeholder="请选择"
-            :clearable="true"
-          >
-            <el-option
-              v-for="(item, key) in ArticleOptions"
-              :key="key"
-              :label="item.label"
-              :value="item.value"
-            />
+          <el-select v-model="formData.status" placeholder="请选择" :clearable="true">
+            <el-option v-for="(item, key) in ArticleOptions" :key="key" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -101,7 +57,7 @@ console.log(useUserStore);
 const type = ref("");
 const ArticleOptions = ref([]);
 const formData = ref({
-  titile: "",
+  title: "",
   userId: 0,
   content: "",
   date: new Date(),
@@ -112,7 +68,7 @@ const formData = ref({
 });
 // 验证规则
 const rule = reactive({
-  titile: [
+  title: [
     {
       required: true,
       message: "",

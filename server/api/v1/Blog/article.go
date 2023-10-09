@@ -19,7 +19,6 @@ type ArticleApi struct {
 
 var articleService = service.ServiceGroupApp.BlogServiceGroup.ArticleService
 
-
 // CreateArticle 创建Article
 // @Tags Article
 // @Summary 创建Article
@@ -40,12 +39,12 @@ func (articleApi *ArticleApi) CreateArticle(c *gin.Context) {
 
 	// 定义验证规则
 	verify := utils.Rules{
-		"Titile":{utils.NotEmpty()},
-		"UserId":{utils.NotEmpty()},
-		"Content":{utils.NotEmpty()},
-		"Date":{utils.NotEmpty()},
+		"Title":  {utils.NotEmpty()},
+		"UserId":  {utils.NotEmpty()},
+		"Content": {utils.NotEmpty()},
+		"Date":    {utils.NotEmpty()},
 		// "Likes":{utils.NotEmpty()},
-		"Status":{utils.NotEmpty()},
+		"Status": {utils.NotEmpty()},
 	}
 
 	// 验证 article 是否符合规则
@@ -62,6 +61,7 @@ func (articleApi *ArticleApi) CreateArticle(c *gin.Context) {
 		response.OkWithMessage("创建成功", c)
 	}
 }
+
 // DeleteArticle 删除Article
 // @Tags Article
 // @Summary 删除Article
@@ -79,7 +79,7 @@ func (articleApi *ArticleApi) DeleteArticle(c *gin.Context) {
 		return
 	}
 	if err := articleService.DeleteArticle(article); err != nil {
-        global.GVA_LOG.Error("删除失败!", zap.Error(err))
+		global.GVA_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败", c)
 	} else {
 		response.OkWithMessage("删除成功", c)
@@ -97,13 +97,13 @@ func (articleApi *ArticleApi) DeleteArticle(c *gin.Context) {
 // @Router /article/deleteArticleByIds [delete]
 func (articleApi *ArticleApi) DeleteArticleByIds(c *gin.Context) {
 	var IDS request.IdsReq
-    err := c.ShouldBindJSON(&IDS)
+	err := c.ShouldBindJSON(&IDS)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
 	if err := articleService.DeleteArticleByIds(IDS); err != nil {
-        global.GVA_LOG.Error("批量删除失败!", zap.Error(err))
+		global.GVA_LOG.Error("批量删除失败!", zap.Error(err))
 		response.FailWithMessage("批量删除失败", c)
 	} else {
 		response.OkWithMessage("批量删除成功", c)
@@ -126,20 +126,20 @@ func (articleApi *ArticleApi) UpdateArticle(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-      verify := utils.Rules{
-          "Titile":{utils.NotEmpty()},
-          "UserId":{utils.NotEmpty()},
-          "Content":{utils.NotEmpty()},
-          "Date":{utils.NotEmpty()},
-          "Likes":{utils.NotEmpty()},
-          "Status":{utils.NotEmpty()},
-      }
-    if err := utils.Verify(article, verify); err != nil {
-      	response.FailWithMessage(err.Error(), c)
-      	return
-     }
+	verify := utils.Rules{
+		"Title":  {utils.NotEmpty()},
+		"UserId":  {utils.NotEmpty()},
+		"Content": {utils.NotEmpty()},
+		"Date":    {utils.NotEmpty()},
+		"Likes":   {utils.NotEmpty()},
+		"Status":  {utils.NotEmpty()},
+	}
+	if err := utils.Verify(article, verify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
 	if err := articleService.UpdateArticle(article); err != nil {
-        global.GVA_LOG.Error("更新失败!", zap.Error(err))
+		global.GVA_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)
 	} else {
 		response.OkWithMessage("更新成功", c)
@@ -163,7 +163,7 @@ func (articleApi *ArticleApi) FindArticle(c *gin.Context) {
 		return
 	}
 	if rearticle, err := articleService.GetArticle(article.ID); err != nil {
-        global.GVA_LOG.Error("查询失败!", zap.Error(err))
+		global.GVA_LOG.Error("查询失败!", zap.Error(err))
 		response.FailWithMessage("查询失败", c)
 	} else {
 		response.OkWithData(gin.H{"rearticle": rearticle}, c)
@@ -182,7 +182,6 @@ func (articleApi *ArticleApi) FindArticle(c *gin.Context) {
 func (articleApi *ArticleApi) GetArticleList(c *gin.Context) {
 	var pageInfo BlogReq.ArticleSearch
 	err := c.ShouldBindQuery(&pageInfo)
-	fmt.Println("-----------------")
 	fmt.Println(pageInfo.LoginUserId)
 	fmt.Println(pageInfo.RoleId)
 	if err != nil {
@@ -190,14 +189,37 @@ func (articleApi *ArticleApi) GetArticleList(c *gin.Context) {
 		return
 	}
 	if list, total, err := articleService.GetArticleInfoList(pageInfo); err != nil {
-	    global.GVA_LOG.Error("获取失败!", zap.Error(err))
-        response.FailWithMessage("获取失败", c)
-    } else {
-        response.OkWithDetailed(response.PageResult{
-            List:     list,
-            Total:    total,
-            Page:     pageInfo.Page,
-            PageSize: pageInfo.PageSize,
-        }, "获取成功", c)
-    }
+		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List:     list,
+			Total:    total,
+			Page:     pageInfo.Page,
+			PageSize: pageInfo.PageSize,
+		}, "获取成功", c)
+	}
+}
+
+//获取所有文章列表
+func (articleApi *ArticleApi) GetArticleListAll(c * gin.Context){
+	var pageInfo BlogReq.ArticleSearch
+	err := c.ShouldBindQuery(&pageInfo)
+	fmt.Println(pageInfo.LoginUserId)
+	fmt.Println(pageInfo.RoleId)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	if list, total, err := articleService.GetArticleInfoList(pageInfo); err != nil {
+		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List:     list,
+			Total:    total,
+			Page:     pageInfo.Page,
+			PageSize: pageInfo.PageSize,
+		}, "获取成功", c)
+	}
 }

@@ -1,24 +1,116 @@
 <template>
   <div class="home">
-    <h1>登陆成功主页</h1>
-    <el-form-item>
-      <el-button type="sub" @click="logout">注销</el-button>
-    </el-form-item>
+    <h1 class="page-title">文章列表</h1>
+    <div class="article-list">
+      <div class="article-item" v-for="article in articles" :key="article.id">
+        <!-- <router-link :to="'/article/' + article.id"> -->
+          <div class="article-header">
+            <h3 class="article-title">{{ article.title }}</h3>
+            <p class="article-meta">
+              <span class="article-date">{{ article.date }}</span>
+              <span class="article-category">{{ article.category }}</span>
+            </p>
+          </div>
+        <!-- </router-link> -->
+        <p class="article-content">{{ article.content }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
-
-
 <script setup>
-import { RouterView } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
-import { userUserStore } from '../pinia/modules/user'
+const articles = ref([]);
 
-const userStore = userUserStore()
+onMounted(async () => {
+  try {
+    const res = await axios.get('/article/getArticleList');
+    articles.value = res.data.data.list;
+  } catch (error) {
+    console.error(error);
+  }
+});
+</script>
 
-
-const logout = async () => {
-  await userStore.logout()
+<style scoped>
+.home {
+  /* padding-top: 80px; */
+  width: 200%;
+  padding: 20px;
+  background-image: "../assets/backImage.jpeg";
+  background-size: cover;
 }
 
-</script>
+.page-title {
+  font-size: 36px;
+  font-weight: bold;
+  /* margin-bottom: 10px; */
+  margin-top: 30px;
+}
+
+.article-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  padding-top: 80px;
+}
+
+.article-item {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.article-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.article-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.article-meta {
+  font-size: 14px;
+  color: #999;
+  margin: 0;
+}
+
+.article-date {
+  margin-right: 10px;
+}
+
+.article-category {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #eee;
+}
+
+.article-content {
+  font-size: 18px;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

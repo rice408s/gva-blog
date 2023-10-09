@@ -35,7 +35,14 @@ func Routers() *gin.Engine {
 		systemRouter.InitBaseRouter(PublicGroup)
 		systemRouter.InitInitRouter(PublicGroup)
 	}
+
+	{
+		BlogRouter := router.RouterGroupApp.Blog
+		//
+		BlogRouter.InitArticleRouter(PublicGroup)
+	}
 	PrivateGroup := Router.Group(global.GVA_CONFIG.System.RouterPrefix)
+	//需要登录才能访问的接口
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
 	{
 		systemRouter.InitApiRouter(PrivateGroup, PublicGroup)
@@ -61,8 +68,7 @@ func Routers() *gin.Engine {
 
 	}
 	{
-		BlogRouter := router.RouterGroupApp.Blog
-		BlogRouter.InitArticleRouter(PrivateGroup)
+		
 	}
 
 	global.GVA_LOG.Info("router register success")

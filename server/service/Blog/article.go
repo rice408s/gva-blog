@@ -73,7 +73,7 @@ func (articleService *ArticleService) GetArticleInfoList(info BlogReq.ArticleSea
 	}
 	
 	//如果当前用户不是管理员，则只能查看自己的文章
-	if info.RoleId != 777 {
+	if info.RoleId != 777 && info.RoleId!=0 {
 		db = db.Where("user_id = ?", info.LoginUserId)
 	}
 

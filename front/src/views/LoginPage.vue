@@ -1,21 +1,15 @@
 <script setup>
 import LoginBox from '../components/LoginBox.vue';
-import { RouterLink } from 'vue-router'
-import HelloWorld from '../components/HelloWorld.vue'
+// import { RouterLink } from 'vue-router'
+// import HelloWorld from '../components/HelloWorld.vue'
 </script>
 
 <template>
     <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
 
-    <div class="wrapper">
-        <HelloWorld msg="这是一个博客" />
+        <!-- <HelloWorld class="hello" msg="这是一个博客" /> -->
 
-        <nav>
-            <RouterLink to="/">Home</RouterLink>
-            <RouterLink to="/about">About</RouterLink>
-            <RouterLink to="/login">Login</RouterLink>
-        </nav>
-    </div>
+
 
     <div class="common-layout">
         <el-container>
@@ -31,7 +25,7 @@ import HelloWorld from '../components/HelloWorld.vue'
 
 
 
-
+<!-- 
 
 <style scoped>
 /* .common-layout {
@@ -41,6 +35,18 @@ header {
     line-height: 1.5;
     max-height: 100vh;
 }
+
+
+.hello {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 3rem;
+    /* color: #42b983; */
+    font-weight: 300;
+    margin-bottom: 2rem;
+
+}
+
 
 .logo {
     display: block;
@@ -98,4 +104,4 @@ nav a:first-of-type {
         margin-top: 1rem;
     }
 }
-</style>
+</style> -->

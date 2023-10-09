@@ -16,7 +16,7 @@ import { defineStore } from 'pinia'
 //     })
 // )
 
-//验证模块
+// 验证模块
 export const useAuthStore = defineStore(
     'auth', {
     state: () => ({

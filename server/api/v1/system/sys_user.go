@@ -1,6 +1,8 @@
 package system
 
 import (
+	"fmt"
+	"net/http"
 	"strconv"
 	"time"
 
@@ -80,8 +82,8 @@ func (b *BaseApi) Login(c *gin.Context) {
 	response.FailWithMessage("验证码错误", c)
 }
 
-//前端登录验证
-func (b *BaseApi)LoginF(c *gin.Context){
+// 前端登录验证
+func (b *BaseApi) LoginF(c *gin.Context) {
 	var l systemReq.LoginF
 	err := c.ShouldBindJSON(&l)
 	if err != nil {
@@ -110,6 +112,32 @@ func (b *BaseApi)LoginF(c *gin.Context){
 
 }
 
+// token验证
+func (b *BaseApi) Verify(c *gin.Context) {
+	token := c.Request.Header.Get("Authorization")
+	fmt.Println(token)
+
+
+	if token == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": "请求未携带token,无权限访问",
+		})
+	}
+	j := utils.NewJWT()
+	// 解析 token，获取其中的用户信息
+	claims, err := j.ParseToken(token)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "无效的 token"})
+		return
+	}
+	user, err := userService.FindUserByUuid(claims.UUID.String())
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "用户不存在"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "验证已通过", "user": user})
+}
 
 // TokenNext 登录以后签发jwt
 func (b *BaseApi) TokenNext(c *gin.Context, user system.SysUser) {

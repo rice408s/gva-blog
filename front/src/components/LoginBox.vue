@@ -2,14 +2,20 @@
     <div class="login-box">
         <h2>登录</h2>
         <el-form>
-            <el-form-item label="用户名">
-                <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
-            </el-form-item>
-            <el-form-item label="密码">
-                <el-input type="password" v-model="form.password" placeholder="请输入密码"></el-input>
-            </el-form-item>
+            <div class="form-item">
+
+                <div class="form-input">
+                    <el-input v-model.trim="form.username" autocomplete="off" style="width: 100%" placeholder="请输入账号" />
+                </div>
+            </div>
+            <div class="form-item">
+
+                <div class="form-input">
+                    <el-input type="password" v-model.trim="form.password" autocomplete="off" style="width: 100%" placeholder="请输入密码" />
+                </div>
+            </div>
             <el-form-item>
-                <el-button type="sub" @click="submitForm">登录</el-button>
+                <el-button type="sub" @click="submitForm" class="login-button">登录</el-button>
             </el-form-item>
         </el-form>
         <div class="register-link">
@@ -33,6 +39,7 @@ const form = reactive({
 const userStore = userUserStore()
 
 const submitForm = async () => {
+    console.log(userStore)
     await userStore.login(form)
 }
 
@@ -70,5 +77,35 @@ h2 {
 .register-link {
     margin-top: 1rem;
     text-align: center;
+}
+
+
+.form-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-label {
+    flex: 0 0 80px;
+    text-align: right;
+    margin-right: 20px;
+}
+
+.form-input {
+    flex: 1;
+}
+
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-button {
+    width: 100%;
+    margin-top: 20px;
 }
 </style>

@@ -17,6 +17,7 @@ func (s *BaseRouter) InitBaseRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
 
 		
 		frontRouter.POST("login", baseApi.LoginF)
+		frontRouter.POST("verify", baseApi.Verify)
 	}
 
 

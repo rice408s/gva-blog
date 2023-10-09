@@ -162,7 +162,7 @@
         <el-table-column
           align="left"
           label="标题"
-          prop="titile"
+          prop="title"
           width="120"
         />
         标签栏
@@ -274,10 +274,10 @@
         >
           <el-form-item
             label="标题:"
-            prop="titile"
+            prop="title"
           >
             <el-input
-              v-model="formData.titile"
+              v-model="formData.title"
               :clearable="true"
               placeholder="请输入标题"
             />
@@ -390,7 +390,7 @@
           border
         >
           <el-descriptions-item label="标题">
-            {{ formData.titile }}
+            {{ formData.title }}
           </el-descriptions-item>
           <el-descriptions-item label="用户id">
             {{ formData.userId }}
@@ -453,7 +453,7 @@ const userId = useUserStore().userInfo.ID
 const ArticleOptions = ref([])
 const formData = ref({
 
-  titile: '',
+  title: '',
   userId: userId,
   content: '',
   date: new Date(),
@@ -465,7 +465,7 @@ const formData = ref({
 
 // 验证规则
 const rule = reactive({
-  titile: [
+  title: [
     {
       required: true,
       message: '',
@@ -737,7 +737,7 @@ const getDetails = async(row) => {
 const closeDetailShow = () => {
   detailShow.value = false
   formData.value = {
-    titile: '',
+    title: '',
     userId: 0,
     content: '',
     date: new Date(),
@@ -758,7 +758,7 @@ const openDialog = () => {
 const closeDialog = () => {
   dialogFormVisible.value = false
   formData.value = {
-    titile: '',
+    title: '',
     userId: 0,
     content: '',
     date: new Date(),

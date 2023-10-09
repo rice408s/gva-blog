@@ -10,7 +10,7 @@ import (
 // Article 结构体  Article
 type Article struct {
       global.GVA_MODEL
-      Titile  string `json:"titile" form:"titile" gorm:"column:titile;comment:;"`  //标题 
+      Title  string `json:"title" form:"title" gorm:"column:title;comment:;"`  //标题 
       UserId  *int `json:"userId" form:"userId" gorm:"column:user_id;comment:;"`  //用户id 
       Content  string `json:"content" form:"content" gorm:"column:content;comment:;"`  //内容 
       Date  *time.Time `json:"date" form:"date" gorm:"column:date;comment:;"`  //发布日期 
