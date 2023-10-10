@@ -7,7 +7,7 @@ import LoginBox from '../components/LoginBox.vue';
 <template>
     <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
 
-        <!-- <HelloWorld class="hello" msg="这是一个博客" /> -->
+    <!-- <HelloWorld class="hello" msg="这是一个博客" /> -->
 
 
 
@@ -25,83 +25,22 @@ import LoginBox from '../components/LoginBox.vue';
 
 
 
-<!-- 
-
 <style scoped>
-/* .common-layout {
-        height: 100%;
-    } */
-header {
-    line-height: 1.5;
-    max-height: 100vh;
-}
+.common-layout {
+    overflow-y: auto;
+    padding-right: calc(100% - 100vw);
 
+    /* 假设滚动条宽度为默认值 */
+    ::-webkit-scrollbar {
+        width: 16px;
+        /* 假设滚动条宽度为16px */
+    }
 
-.hello {
-    margin: 0 auto;
-    text-align: center;
-    font-size: 3rem;
-    /* color: #42b983; */
-    font-weight: 300;
-    margin-bottom: 2rem;
-
-}
-
-
-.logo {
-    display: block;
-    margin: 0 auto 2rem;
-}
-
-nav {
+    /* background-color: #d6e1f3; */
+    /* height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-    color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-    background-color: transparent;
-}
-
-nav a {
-    display: inline-block;
-    padding: 0 1rem;
-    border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-    border: 1px;
-}
-
-@media (min-width: 1024px) {
-    header {
-        display: flex;
-        place-items: center;
-        padding-right: calc(var(--section-gap) / 2);
-    }
-
-    .logo {
-        margin: 0 2rem 0 0;
-    }
-
-    header .wrapper {
-        display: flex;
-        place-items: flex-start;
-        flex-wrap: wrap;
-    }
-
-    nav {
-        text-align: left;
-        margin-left: -1rem;
-        font-size: 1rem;
-
-        padding: 1rem 0;
-        margin-top: 1rem;
-    }
-}
-</style> -->
+    margin-left: 0; */
+}</style>

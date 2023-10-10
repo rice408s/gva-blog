@@ -22,11 +22,13 @@
                 <span class="el-dropdown-link">
                     {{ username }}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
-                <el-dropdown-menu v-slot:dropdown>
-                    <el-dropdown-item>个人信息</el-dropdown-item>
-                    <el-dropdown-item>修改密码</el-dropdown-item>
-                    <el-dropdown-item divided>退出登录</el-dropdown-item>
-                </el-dropdown-menu>
+                <template #dropdown>
+                    <el-dropdown-menu>
+                        <el-dropdown-item>个人信息</el-dropdown-item>
+                        <el-dropdown-item>修改密码</el-dropdown-item>
+                        <el-dropdown-item divided @click="handleLogout">退出登录</el-dropdown-item>
+                    </el-dropdown-menu>
+                </template>
             </el-dropdown>
             <router-link v-else to="/login">登录</router-link>
         </div>
@@ -34,7 +36,7 @@
 </template>
 
 <script>
-import { defineComponent, ref,computed } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ElInput } from 'element-plus'
 import { userUserStore } from '@/pinia/modules/user'
@@ -51,6 +53,10 @@ export default defineComponent({
             required: true
         }
     },
+
+
+
+
     setup(props) {
         const keyword = ref('')
         const showSearchBox = ref(false)
@@ -60,14 +66,19 @@ export default defineComponent({
             if (keyword.value) {
                 window.location.href = `/search?q=${keyword.value}`
             }
-        }
+        };
 
-        const username= computed(() => userStore.username)
+        const handleLogout = () => {
+            userStore.logout();
+        };
+
+        const username = computed(() => userStore.username)
         return {
             keyword,
             showSearchBox,
             search,
-            username
+            username,
+            handleLogout
         }
     }
 })

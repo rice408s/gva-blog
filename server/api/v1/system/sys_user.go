@@ -135,8 +135,8 @@ func (b *BaseApi) Verify(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "用户不存在"})
 		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "验证已通过", "user": user})
+	//
+	c.JSON(http.StatusOK, gin.H{"message": "验证已通过", "user": user,"code":0})
 }
 
 // TokenNext 登录以后签发jwt

@@ -27,13 +27,13 @@ export const userUserStore = defineStore(
             try {
                 const authStore = useAuthStore()
 
-                this.username = userData.username
+
                 const result = await axios.post('/front/login', userData)
                 const { data, code } = result.data
                 if (code === 0) {
                     this.token = data.token
                     authStore.setIsAuthenticated(true)
-                    
+                    this.username = userData.username
                     
                     localStorage.setItem('token', this.token)
                     
@@ -41,6 +41,7 @@ export const userUserStore = defineStore(
                 }
                 else {
                     alert('登录失败')
+                    this.username=''
                 }
             } catch (e) {
                 console.log(e)
@@ -62,20 +63,25 @@ export const userUserStore = defineStore(
         async init(){
             const token = localStorage.getItem('token')
             if (token){
+                console.log('good')
                 console.log(token)
                 try{
                     const res=await  axios.post('/front/verify',null,{
                         headers:{
-                            Authorization:`Bearer ${token}`
+                            Authorization:`${token}`
                         }
                     })
-                    const {code ,data}=res.data
+                    const {code ,user}=res.data
+                    console.log('xxxxxx')
+                    console.log(res.data)
+                    console.log(user.ID)
                     if (code==0){
-                        this.username=data.username
+                        this.username=user.userName
                         this.token=token
-                        this.userId=data.userId
+                        this.userId=user.ID
                     }else{
                         localStorage.removeItem('token')
+                        console.log('bad')
                     }
                 }catch(e){
                     console.error(e)
