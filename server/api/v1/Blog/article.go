@@ -158,6 +158,7 @@ func (articleApi *ArticleApi) UpdateArticle(c *gin.Context) {
 func (articleApi *ArticleApi) FindArticle(c *gin.Context) {
 	var article Blog.Article
 	err := c.ShouldBindQuery(&article)
+	fmt.Println(article)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

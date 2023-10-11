@@ -10,9 +10,9 @@ type ArticleRouter struct {
 }
 
 // InitArticleRouter 初始化 Article 路由信息
-func (s *ArticleRouter) InitArticleRouter(Router *gin.RouterGroup) {
-	articleRouter := Router.Group("article").Use(middleware.OperationRecord())
-	articleRouterWithoutRecord := Router.Group("article")
+func (s *ArticleRouter) InitArticleRouter(PrivateRouter ,PublicRouter *gin.RouterGroup) {
+	articleRouter := PrivateRouter.Group("article").Use(middleware.OperationRecord())
+	articleRouterWithoutRecord := PublicRouter.Group("article")
 	var articleApi = v1.ApiGroupApp.BlogApiGroup.ArticleApi
 	{
 		articleRouter.POST("createArticle", articleApi.CreateArticle)   // 新建Article
