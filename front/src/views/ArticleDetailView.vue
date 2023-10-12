@@ -76,6 +76,7 @@ export default {
             try {
                 // 获取博客详情
                 const res = await axios.get(`/article/findArticle?ID=${props.id}`);
+                console.log(props.id)
                 article.value = res.data.data.rearticle;
 
                 // 获取评论列表

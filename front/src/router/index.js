@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { userUserStore } from '@/pinia/modules/user'
 import { store } from '@/pinia/index'
 import { useAuthStore } from '@/utils/auth'
@@ -6,7 +6,7 @@ import { useAuthStore } from '@/utils/auth'
 
 
 const router = createRouter({
-  history: createWebHistory(/*import.meta.env.BASE_URL*/),
+  history: createWebHashHistory(/*import.meta.env.BASE_URL*/),
   routes: [
     {
       path: '/',
@@ -29,8 +29,6 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: () => import('../views/HomeView.vue'),
-      //需要登录才能访问
-      // meta: { requiresAuth: true }
     }, {
       path: '/article/:id',
       name: 'ArticleDetail',
