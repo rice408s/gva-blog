@@ -15,7 +15,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 185%;
+    width: 100%;
     margin-left: 0;
 }
 

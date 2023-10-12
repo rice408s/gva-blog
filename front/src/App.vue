@@ -24,7 +24,14 @@ import FootBar from './components/FootBar.vue'
 
 <style scoped>
 
-
+.RouterView {
+  background-color: #f0f2f5;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
 .FootBar {

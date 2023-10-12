@@ -31,10 +31,12 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue'),
       //需要登录才能访问
       // meta: { requiresAuth: true }
-    },{
+    }, {
       path: '/article/:id',
-    component: ()=>import('../views/ArticleDetailView.vue')
-    }
+      name: 'ArticleDetail',
+      component: () => import('../views/ArticleDetailView.vue'),
+      props: true
+    },
   ]
 })
 

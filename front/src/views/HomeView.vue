@@ -3,10 +3,10 @@
 
       <!-- <h1 class="page-title">文章列表</h1> -->
       <div class="article-list">
-        <div class="article-item" v-for="article in articles" :key="article.id">
+        <div class="article-item" v-for="article in articles" :key="article.ID" @click="toArticleDetail(article.ID)">
           <!-- <router-link :to="'/article/' + article.id"> -->
-          <div class="article-header">
-            <h3 class="article-title">{{ article.title }}</h3>
+          <div class="article-header">  
+            <h3 class="article-title"> {{ article.title }}</h3>
             <p class="article-meta">
               <span class="article-category">{{ article.category }}</span>
               <span class="article-date">{{ formatDate(article.date) }}</span>
@@ -27,7 +27,10 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
+import router from '../router/index'
+
 const articles = ref([]);
+
 
 
 
@@ -39,6 +42,17 @@ onMounted(async () => {
     console.error(error);
   }
 });
+
+
+  // const hello= ()=>{
+  //   router.push('/login')
+  // }
+
+
+const toArticleDetail = (id) => {
+  console.log(id)
+  router.push({name: 'ArticleDetail', params: {id}});
+};
 
 
 const formatDate = (dateString) => {
@@ -55,15 +69,16 @@ const formatDate = (dateString) => {
 <style scoped>
 .home {
   /* padding-top: 80px; */
-  width: 200%;
-  padding: 20px;
+  width: 100%;
+  padding-top: 40px;
   background-image: "../assets/backImage.jpeg";
   background-size: cover;
+  justify-content: center;
   /* overflow-y: scroll; */
-  padding-right: calc(100% - 100vw); /* 假设滚动条宽度为默认值 */
-  ::-webkit-scrollbar {
-  width: 16px; /* 假设滚动条宽度为16px */
-}
+  /* padding-right: calc(100% - 100vw); /* 假设滚动条宽度为默认值 */
+  /* ::-webkit-scrollbar {
+  width: 16px; 假设滚动条宽度为16px */ 
+/* } */
 }
 
 
@@ -79,15 +94,16 @@ const formatDate = (dateString) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 1000px;
+  justify-content: center;
+  width: 200%;
+  max-width: 600px;
   padding-top: 350px;
 
 
 }
 
 .article-item {
-  width: 100%;
+  width: 200%;
   max-width: 800px;
   margin-bottom: 20px;
   padding: 20px;
@@ -96,8 +112,8 @@ const formatDate = (dateString) => {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   transition: all 0.3s ease;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .article-item:hover {
