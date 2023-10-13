@@ -1,6 +1,9 @@
 <template>
     <div class="article-detail">
-        <el-card>
+        <PageHeader :article="article" :userId="article.userId"></PageHeader>
+        <a-row :span="12" >111</a-row>
+        <a-row :span="12">222</a-row>
+        <!-- <el-card>
             <h1 slot="header">{{ article.title }}</h1>
             <div class="article-meta">
                 <span>作者：{{ article.author }}</span>
@@ -12,7 +15,8 @@
                 <h2>评论区</h2>
                 <el-comment v-for="comment in comments" :key="comment.id" :author="comment.author" :datetime="comment.time">
                     <div slot="content">{{ comment.content }}</div>
-                    <el-comment v-for="reply in comment.replies" :key="reply.id" :author="reply.author" :datetime="reply.time">
+                    <el-comment v-for="reply in comment.replies" :key="reply.id" :author="reply.author"
+                        :datetime="reply.time">
                         <div slot="content">{{ reply.content }}</div>
                     </el-comment>
                     <el-form-item>
@@ -50,14 +54,31 @@
                     </el-col>
                 </el-row>
             </div>
-        </el-card>
+        </el-card> -->
     </div>
 </template>
 
-<script>
+<style scoped>
+.article-detail {
+    max-width: 1400px;
+    margin: 0 auto;
+    max-height: 200%;
+    height: 200%;
+    padding: 24px;
+}
+
+.head-title {
+    margin-bottom: 24px;
+    justify-content: left;
+    align-items: start;
+}
+
+</style>
+
+<script >
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-
+import PageHeader from '@/components/PageHeader.vue';
 export default {
     name: 'ArticleDetail',
     props: {
@@ -66,6 +87,11 @@ export default {
             required: true,
         },
     },
+    components: {
+        PageHeader,
+    },
+
+
     setup(props) {
         const article = ref({});
         const comments = ref([]);
@@ -76,16 +102,15 @@ export default {
             try {
                 // 获取博客详情
                 const res = await axios.get(`/article/findArticle?ID=${props.id}`);
-                console.log(props.id)
                 article.value = res.data.data.rearticle;
 
                 // 获取评论列表
-                const commentRes = await axios.get(`/comment/list?articleId=${props.id}`);
-                comments.value = commentRes.data.data;
+                // const commentRes = await axios.get(`/comment/list?articleId=${props.id}`);
+                // comments.value = commentRes.data.data;
 
                 // 获取相关博客推荐
-                const relatedRes = await axios.get(`/article/related?articleId=${props.id}`);
-                relatedArticles.value = relatedRes.data.data;
+                // const relatedRes = await axios.get(`/article/related?articleId=${props.id}`);
+                // relatedArticles.value = relatedRes.data.data;
             } catch (error) {
                 console.error(error);
             }
@@ -149,123 +174,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.article-detail {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.article-meta {
-    margin-bottom: 20px;
-}
-
-.article-meta span {
-    margin-right: 20px;
-}
-
-.article-content {
-    margin-bottom: 20px;
-}
-
-.article-comments {
-    margin-bottom: 20px;
-}
-
-.comment-list {
-    list-style: none;
-    padding: 0;
-}
-
-.comment-list li {
-    margin-bottom: 20px;
-}
-
-.comment-header {
-    margin-bottom: 10px;
-}
-
-.comment-header span {
-    margin-right: 10px;
-}
-
-.comment-content {
-    margin-bottom: 10px;
-}
-
-.reply-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.reply-list li {
-    margin-bottom: 10px;
-}
-
-.reply-header {
-    margin-bottom: 5px;
-}
-
-.reply-header span {
-    margin-right: 10px;
-}
-
-.reply-content {
-    margin-bottom: 5px;
-}
-
-.reply-form {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.reply-form textarea {
-    width: 100%;
-    height: 60px;
-    margin-bottom: 10px;
-}
-
-.comment-form textarea {
-    width: 100%;
-    height: 80px;
-    margin-bottom: 10px;
-}
-
-.article-actions {
-    margin-bottom: 20px;
-}
-
-.article-actions button {
-    margin-right: 10px;
-}
-
-.article-related {
-    margin-bottom: 20px;
-}
-
-.article-related h2 {
-    margin-bottom: 10px;
-}
-
-.related-list {
-    list-style: none;
-    padding: 0;
-}
-
-.related-list li {
-    margin-bottom: 10px;
-}
-
-.related-list a {
-    color: #333;
-    text-decoration: none;
-}
-
-.related-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-</style>

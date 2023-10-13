@@ -117,7 +117,6 @@ func (b *BaseApi) Verify(c *gin.Context) {
 	token := c.Request.Header.Get("Authorization")
 	fmt.Println(token)
 
-
 	if token == "" {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"message": "请求未携带token,无权限访问",
@@ -136,7 +135,7 @@ func (b *BaseApi) Verify(c *gin.Context) {
 		return
 	}
 	//
-	c.JSON(http.StatusOK, gin.H{"message": "验证已通过", "user": user,"code":0})
+	c.JSON(http.StatusOK, gin.H{"message": "验证已通过", "user": user, "code": 0})
 }
 
 // TokenNext 登录以后签发jwt
@@ -524,4 +523,25 @@ func (b *BaseApi) ResetPassword(c *gin.Context) {
 		return
 	}
 	response.OkWithMessage("重置成功", c)
+}
+
+// 通过id获取用户名
+func (b *BaseApi) GetUsernameById(c *gin.Context) {
+	var user system.SysUser
+	err := c.ShouldBindQuery(&user)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	fmt.Println(user)
+
+	u, err := userService.FindUserById(int(user.ID))
+	fmt.Println(u)
+	if err != nil {
+		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败"+err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(gin.H{"nickName": u.NickName}, "获取成功", c)
 }

@@ -28,7 +28,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 import router from '../router/index'
-
+import { formatDate } from '@/utils/time';
 const articles = ref([]);
 
 
@@ -55,14 +55,14 @@ const toArticleDetail = (id) => {
 };
 
 
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-};
+// const formatDate = (dateString) => {
+//   const date = new Date(dateString);
+//   return date.toLocaleDateString('zh-CN', {
+//     year: 'numeric',
+//     month: 'long',
+//     day: 'numeric'
+//   });
+// };
 
 </script>
 

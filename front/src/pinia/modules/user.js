@@ -11,6 +11,7 @@ export const userUserStore = defineStore(
     //状态函数
     state: () => ({
         username: '',
+        nickName: '',
         token: '',
         userId: '',
     }),
@@ -31,10 +32,12 @@ export const userUserStore = defineStore(
                 const result = await axios.post('/front/login', userData)
                 const { data, code } = result.data
                 if (code === 0) {
+                    console.log(data)
                     this.token = data.token
                     authStore.setIsAuthenticated(true)
                     this.username = userData.username
-                    
+                    this.nickName = data.user.nickName
+                    console.log(this.nickName)
                     localStorage.setItem('token', this.token)
                     
                     router.push('/home')

@@ -20,7 +20,7 @@
             <router-link to="/about">关于</router-link>
             <el-dropdown v-if="username" trigger="click">
                 <span class="el-dropdown-link">
-                    {{ username }}<i class="el-icon-arrow-down el-icon--right"></i>
+                    {{ nickName }}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
@@ -72,14 +72,15 @@ export default defineComponent({
         const handleLogout = () => {
             userStore.logout();
         };
-
+        const nickName = computed(() => userStore.nickName)
         const username = computed(() => userStore.username)
         return {
             keyword,
             showSearchBox,
             search,
             username,
-            handleLogout
+            handleLogout,
+            nickName 
         }
     }
 })
